@@ -1,5 +1,5 @@
 ## Описание
-**Spring TCP Server** - это плагин для Spring, который позволяет быстро сделать TCP-сервер. Включает в себя:
+**Spring TCP** - это плагин для Spring, который позволяет быстро сделать TCP-сервер. Включает в себя:
 * **@TcpController** - интерфейс, помечающий класс как TCP-контроллер,
 * **ServerUtils** - бин, с помощью которого можно управлять сервером.
 
@@ -39,9 +39,8 @@ tcp.server.autostart=true
 ```java
 @Configuration
 @EnableIntegration
-@ComponentScan({"org.springframework.tcp", //!!! Для активации плагина необходимо добавить эту строку
-                "ru.vympel"})
 @EnableAutoConfiguration
+@EnableTcpControllers
 public class Main {
     public static void main(String[] args) throws Exception {
         SpringApplication.run(Main.class);
@@ -52,9 +51,9 @@ public class Main {
 ## Установка
 1) Необходимо подключить к Spring Boot проекту библиотеку **springtcp-X.X.jar
 
-2) В конфигурацию добавить сканирование пакета из библиотеки:
+2) В конфигурацию добавить аннотацию:
 ```java
-@ComponentScan({"org.springframework.tcp","ВАШ_ПАКЕТ"}
+@EnableTcpControllers
 ```
 3) в файле src/main/resources/application.properties задать настройки сервера:
 ```
