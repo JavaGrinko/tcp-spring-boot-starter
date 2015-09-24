@@ -38,8 +38,6 @@ tcp.server.autostart=true
 **ApplicationContext:**
 ```java
 @Configuration
-@EnableIntegration
-@EnableAutoConfiguration
 @EnableTcpControllers
 public class Main {
     public static void main(String[] args) throws Exception {
