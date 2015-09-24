@@ -63,6 +63,7 @@ tcp.server.autostart=true
 
 Если автостарт не задан или установлено значение **false**, то необходимо вручную запустить сервер из кода:
 ```java
+@Component
 public class Starter {
     @Autowired
     ServerUtils serverUtils;
