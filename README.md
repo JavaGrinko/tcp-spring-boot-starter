@@ -56,7 +56,7 @@ repositories {
 }
 
 dependencies {
-    compile 'javagrinko:spring-tcp-controller:0.28')
+    compile 'javagrinko:spring-tcp-controller:0.28'
     ...
 }
 
