@@ -2,6 +2,7 @@ group 'ru.vympel'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
+apply plugin: 'maven'
 
 sourceCompatibility = 1.8
 
@@ -18,10 +19,31 @@ version= ver +"."+ subver
 
 repositories {
     mavenCentral()
+    maven {
+        url  "http://dl.bintray.com/javagrinko/maven"
+    }
+}
+
+task createPom << {
+    pom {
+        project {
+            groupId 'javagrinko'
+            artifactId 'spring-tcp-controller'
+            version '0.28'
+            licenses {
+                license {
+                    name 'The Apache Software License, Version 2.0'
+                    url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    distribution 'repo'
+                }
+            }
+        }
+    }.writeTo("build/libs/spring-tcp-controller-"+version+".pom")
 }
 
 dependencies {
+    compile 'javagrinko:spring-tcp-controller:0.29'
     compile("org.springframework.boot:spring-boot-starter:1.2.6.RELEASE");
-    compile 'com.esotericsoftware:kryonet:2.22.0-RC1'
+    //compile 'com.esotericsoftware:kryonet:2.22.0-RC1'
     testCompile group: 'junit', name: 'junit', version: '4.11'
 }
