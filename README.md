@@ -1,5 +1,5 @@
 ## Описание
-**Spring TCP** - это плагин для Spring, который позволяет быстро сделать TCP-сервер. Включает в себя:
+**spring-tcp-controller** - это библиотека для Spring, которая позволяет быстро разворачивать TCP-сервера. Включает в себя:
 * **@TcpController** - интерфейс, помечающий класс как TCP-контроллер,
 * **ServerUtils** - бин, с помощью которого можно управлять сервером.
 
@@ -47,7 +47,20 @@ public class Main {
 ```
 
 ## Установка
-1) Необходимо подключить к Spring проекту библиотеку **springtcp-X.X.jar**
+1) Необходимо добавить зависимость в build.gradle:
+```
+repositories {
+    maven {
+        url  "http://dl.bintray.com/javagrinko/maven"
+    }
+}
+
+dependencies {
+    compile 'javagrinko:spring-tcp-controller:0.28'
+    ...
+}
+
+```
 
 2) В конфигурацию добавить аннотацию:
 ```java
