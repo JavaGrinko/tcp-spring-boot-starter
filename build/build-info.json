@@ -1,0 +1,162 @@
+{
+  "version" : "1.0.1",
+  "name" : "spring-tcp-controller",
+  "number" : "1448020841902",
+  "type" : "GRADLE",
+  "buildAgent" : {
+    "name" : "Gradle",
+    "version" : "2.2"
+  },
+  "agent" : {
+    "name" : "Gradle",
+    "version" : "2.2"
+  },
+  "started" : "2015-11-20T15:00:41.791+0300",
+  "durationMillis" : 751,
+  "principal" : "Prgrmr1",
+  "artifactoryPrincipal" : "admin",
+  "licenseControl" : {
+    "runChecks" : false,
+    "includePublishedArtifacts" : false,
+    "autoDiscover" : false,
+    "licenseViolationsRecipientsList" : "",
+    "scopesList" : ""
+  },
+  "buildRetention" : {
+    "count" : -1,
+    "deleteBuildArtifacts" : true,
+    "buildNumbersNotToBeDiscarded" : [ ]
+  },
+  "modules" : [ {
+    "id" : "javagrinko:spring-tcp-controller:0.120",
+    "artifacts" : [ {
+      "type" : "jar",
+      "sha1" : "67dd9ccd6587d6859fa6015a52ccc1fa5714a7c7",
+      "md5" : "78bead11b1a17cfa14a1de57241157e3",
+      "name" : "spring-tcp-controller-0.120.jar"
+    }, {
+      "type" : "pom",
+      "sha1" : "562ce87fe1ba8f58da82049e3053f0a89c78bff1",
+      "md5" : "e3a0c94defe1e6dbd9559508c06016d4",
+      "name" : "spring-tcp-controller-0.120.pom"
+    } ],
+    "excludedArtifacts" : [ ],
+    "dependencies" : [ {
+      "type" : "jar",
+      "sha1" : "95a83e8a81ce873505badb92a61751ac48824922",
+      "md5" : "3708b7fb3202e46f06b5ed94de459369",
+      "id" : "org.springframework.boot:spring-boot-starter:1.2.6.RELEASE",
+      "scopes" : [ "compile" ]
+    }, {
+      "type" : "jar",
+      "sha1" : "888496de7156692a0eb5685cb18e0f6dd23b1ff4",
+      "md5" : "b3d4e72a3940023997d38164436e09c5",
+      "id" : "org.springframework.boot:spring-boot:1.2.6.RELEASE",
+      "scopes" : [ "compile" ]
+    }, {
+      "type" : "jar",
+      "sha1" : "bfabd0f400672b42fa5ace228341fa77a6a9ba4e",
+      "md5" : "84390ea7fdd5d2e464ed69e34e3dfa87",
+      "id" : "org.springframework.boot:spring-boot-autoconfigure:1.2.6.RELEASE",
+      "scopes" : [ "compile" ]
+    }, {
+      "type" : "jar",
+      "sha1" : "705098e35b3a95c6353632077702d079e20199cf",
+      "md5" : "28b2a618867bf06fa4b1914873965d1c",
+      "id" : "org.springframework.boot:spring-boot-starter-logging:1.2.6.RELEASE",
+      "scopes" : [ "compile" ]
+    }, {
+      "type" : "jar",
+      "sha1" : "9f8e34eef228f44bda771c9dc62e9f1efa82c92d",
+      "md5" : "8b70fbcb152d96f6d1af47f18c47fe42",
+      "id" : "org.springframework:spring-core:4.1.7.RELEASE",
+      "scopes" : [ "compile" ]
+    }, {
+      "type" : "jar",
+      "sha1" : "c2df91929ed06a25001939929bff5120e0ea3fd4",
+      "md5" : "1dd614fe1f1d9b6b5ef0fd2c1857e659",
+      "id" : "org.yaml:snakeyaml:1.14",
+      "scopes" : [ "compile" ]
+    }, {
+      "type" : "jar",
+      "sha1" : "8c6c02bcccfa23a74db59f7b7725e69e1af38f04",
+      "md5" : "72cf00db18a05e7d568f145790ce7ee9",
+      "id" : "org.springframework:spring-context:4.1.7.RELEASE",
+      "scopes" : [ "compile" ]
+    }, {
+      "type" : "jar",
+      "sha1" : "adef7a9e1263298255fdb5cb107ff171d07c82f3",
+      "md5" : "5989c932ad8fff557a90f6f9032e57f9",
+      "id" : "org.slf4j:jcl-over-slf4j:1.7.12",
+      "scopes" : [ "compile" ]
+    }, {
+      "type" : "jar",
+      "sha1" : "8811e2e9ab9055e557598dc9aedc64fd43e0ab20",
+      "md5" : "30cd1de346b6711a22003118b89c6974",
+      "id" : "org.slf4j:jul-to-slf4j:1.7.12",
+      "scopes" : [ "compile" ]
+    }, {
+      "type" : "jar",
+      "sha1" : "d2444c9c7c1923304c25f86c5ee83a79a8166205",
+      "md5" : "3aa22dbf9b970c1c69054aaba5054002",
+      "id" : "org.slf4j:log4j-over-slf4j:1.7.12",
+      "scopes" : [ "compile" ]
+    }, {
+      "type" : "jar",
+      "sha1" : "d90276fff414f06cb375f2057f6778cd63c6082f",
+      "md5" : "19ec751a4fe907ddb204dff93103acbb",
+      "id" : "ch.qos.logback:logback-classic:1.1.3",
+      "scopes" : [ "compile" ]
+    }, {
+      "type" : "jar",
+      "sha1" : "4bfc12adfe4842bf07b657f0369c4cb522955686",
+      "md5" : "040b4b4d8eac886f6b4a2a3bd2f31b00",
+      "id" : "commons-logging:commons-logging:1.2",
+      "scopes" : [ "compile" ]
+    }, {
+      "type" : "jar",
+      "sha1" : "127f005bac8ec1fbbbc5bb1595d78c6179394a46",
+      "md5" : "a9fc0a33f011fe32118d068c98607745",
+      "id" : "org.springframework:spring-aop:4.1.7.RELEASE",
+      "scopes" : [ "compile" ]
+    }, {
+      "type" : "jar",
+      "sha1" : "e52148e9671e2918a2172c9cf56b77bede2042ce",
+      "md5" : "0d86d5dc58af2e0519d2516ebe880063",
+      "id" : "org.springframework:spring-beans:4.1.7.RELEASE",
+      "scopes" : [ "compile" ]
+    }, {
+      "type" : "jar",
+      "sha1" : "9bc3b81d05961f042ea4a45e84d60cdc59ea51f5",
+      "md5" : "f303752dd2529cc4f1262c74272209e1",
+      "id" : "org.springframework:spring-expression:4.1.7.RELEASE",
+      "scopes" : [ "compile" ]
+    }, {
+      "type" : "jar",
+      "sha1" : "8e20852d05222dc286bf1c71d78d0531e177c317",
+      "md5" : "68910bf95dbcf90ce5859128f0f75d1e",
+      "id" : "org.slf4j:slf4j-api:1.7.12",
+      "scopes" : [ "compile" ]
+    }, {
+      "type" : "jar",
+      "sha1" : "e3c02049f2dbbc764681b40094ecf0dcbc99b157",
+      "md5" : "94975ef44aa05c5067563875a783351e",
+      "id" : "ch.qos.logback:logback-core:1.1.3",
+      "scopes" : [ "compile" ]
+    }, {
+      "type" : "jar",
+      "sha1" : "0235ba8b489512805ac13a8f9ea77a1ca5ebe3e8",
+      "md5" : "04177054e180d09e3998808efa0401c7",
+      "id" : "aopalliance:aopalliance:1.0",
+      "scopes" : [ "compile" ]
+    } ]
+  } ],
+  "governance" : {
+    "blackDuckProperties" : {
+      "runChecks" : false,
+      "includePublishedArtifacts" : false,
+      "autoCreateMissingComponentRequests" : false,
+      "autoDiscardStaleComponentRequests" : false
+    }
+  }
+}
