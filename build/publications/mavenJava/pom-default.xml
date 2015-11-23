@@ -4,8 +4,14 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>javagrinko</groupId>
   <artifactId>spring-tcp-controller</artifactId>
-  <version>0.120</version>
+  <version>0.122</version>
   <dependencies>
+    <dependency>
+      <groupId>javagrinko</groupId>
+      <artifactId>spring-tcp-controller</artifactId>
+      <version>0.29</version>
+      <scope>runtime</scope>
+    </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter</artifactId>

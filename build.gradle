@@ -1,10 +1,25 @@
-group 'ru.vympel'
+buildscript {
+    repositories {
+        maven {
+            url 'http://78.24.28.197:8081/artifactory/plugins-release' //адрес репозитория с плагинами
+            credentials {
+                username = "admin" //логин
+                password = "password" //пароль
+            }
+        }
+    }
+    dependencies {
+        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:3.0.1" //зависимость для плагина
+    }
+}
+
+group 'javagrinko'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
 apply plugin: 'maven'
-
-sourceCompatibility = 1.8
+apply plugin: "com.jfrog.artifactory" //плагин для публикации
+apply plugin: 'maven-publish' //плагин для публикации maven артифактов
 
 def props = new Properties()
 def file = new File("version.properties")
@@ -24,26 +39,37 @@ repositories {
     }
 }
 
-task createPom << {
-    pom {
-        project {
-            groupId 'javagrinko'
-            artifactId 'spring-tcp-controller'
-            version '0.28'
-            licenses {
-                license {
-                    name 'The Apache Software License, Version 2.0'
-                    url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                    distribution 'repo'
-                }
-            }
-        }
-    }.writeTo("build/libs/spring-tcp-controller-"+version+".pom")
-}
-
 dependencies {
     compile 'javagrinko:spring-tcp-controller:0.29'
     compile("org.springframework.boot:spring-boot-starter:1.2.6.RELEASE");
     //compile 'com.esotericsoftware:kryonet:2.22.0-RC1'
     testCompile group: 'junit', name: 'junit', version: '4.11'
+}
+
+
+artifactory {
+    contextUrl = "http://78.24.28.197:8081/artifactory"
+    publish {
+        repository {
+            repoKey = 'vympel'
+            username = "admin"
+            password = "password"
+            maven = true
+
+        }
+        defaults {
+            publications ('mavenJava')
+        }
+    }
+}
+
+/**
+ * Нужная вещь, хз зачем
+ */
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
 }

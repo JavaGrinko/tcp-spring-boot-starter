@@ -1,7 +1,7 @@
 {
   "version" : "1.0.1",
   "name" : "spring-tcp-controller",
-  "number" : "1448020841902",
+  "number" : "1448281187316",
   "type" : "GRADLE",
   "buildAgent" : {
     "name" : "Gradle",
@@ -11,8 +11,8 @@
     "name" : "Gradle",
     "version" : "2.2"
   },
-  "started" : "2015-11-20T15:00:41.791+0300",
-  "durationMillis" : 751,
+  "started" : "2015-11-23T15:19:47.226+0300",
+  "durationMillis" : 847,
   "principal" : "Prgrmr1",
   "artifactoryPrincipal" : "admin",
   "licenseControl" : {
@@ -28,17 +28,17 @@
     "buildNumbersNotToBeDiscarded" : [ ]
   },
   "modules" : [ {
-    "id" : "javagrinko:spring-tcp-controller:0.120",
+    "id" : "javagrinko:spring-tcp-controller:0.122",
     "artifacts" : [ {
-      "type" : "jar",
-      "sha1" : "67dd9ccd6587d6859fa6015a52ccc1fa5714a7c7",
-      "md5" : "78bead11b1a17cfa14a1de57241157e3",
-      "name" : "spring-tcp-controller-0.120.jar"
-    }, {
       "type" : "pom",
-      "sha1" : "562ce87fe1ba8f58da82049e3053f0a89c78bff1",
-      "md5" : "e3a0c94defe1e6dbd9559508c06016d4",
-      "name" : "spring-tcp-controller-0.120.pom"
+      "sha1" : "602a2432fc61fa2fc69ef9c999973e15f6e4e2f1",
+      "md5" : "fdae74f269a0fdafcf015fdd05cc4968",
+      "name" : "spring-tcp-controller-0.122.pom"
+    }, {
+      "type" : "jar",
+      "sha1" : "3800100611f6850b4b67b16926d5f556630b176f",
+      "md5" : "fc98063442e714e001fb66c8790d4dfc",
+      "name" : "spring-tcp-controller-0.122.jar"
     } ],
     "excludedArtifacts" : [ ],
     "dependencies" : [ {
@@ -148,6 +148,12 @@
       "sha1" : "0235ba8b489512805ac13a8f9ea77a1ca5ebe3e8",
       "md5" : "04177054e180d09e3998808efa0401c7",
       "id" : "aopalliance:aopalliance:1.0",
+      "scopes" : [ "compile" ]
+    }, {
+      "type" : "jar",
+      "sha1" : "3800100611f6850b4b67b16926d5f556630b176f",
+      "md5" : "fc98063442e714e001fb66c8790d4dfc",
+      "id" : "javagrinko:spring-tcp-controller:0.122",
       "scopes" : [ "compile" ]
     } ]
   } ],

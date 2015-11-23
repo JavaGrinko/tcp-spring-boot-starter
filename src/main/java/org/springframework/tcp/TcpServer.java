@@ -44,9 +44,9 @@ public class TcpServer implements Server, Connection.Listener {
                     Socket socket = serverSocket.accept();
                     if (socket.isConnected()) {
                         TcpConnection tcpConnection = new TcpConnection(socket);
-                        connected(tcpConnection);
-                        tcpConnection.addListener(this);
                         tcpConnection.start();
+                        tcpConnection.addListener(this);
+                        connected(tcpConnection);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
