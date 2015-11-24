@@ -1,15 +1,9 @@
 buildscript {
     repositories {
-        maven {
-            url 'http://78.24.28.197:8081/artifactory/plugins-release' //адрес репозитория с плагинами
-            credentials {
-                username = "admin" //логин
-                password = "password" //пароль
-            }
-        }
+        jcenter()
     }
     dependencies {
-        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:3.0.1" //зависимость для плагина
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.0'
     }
 }
 
@@ -18,7 +12,7 @@ version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
 apply plugin: 'maven'
-apply plugin: "com.jfrog.artifactory" //плагин для публикации
+apply plugin: "com.jfrog.bintray" //плагин для публикации
 apply plugin: 'maven-publish' //плагин для публикации maven артифактов
 
 def props = new Properties()
@@ -40,26 +34,35 @@ repositories {
 }
 
 dependencies {
-    compile 'javagrinko:spring-tcp-controller:0.29'
+    compile 'javagrinko:spring-tcp-controller:0.141'
     compile("org.springframework.boot:spring-boot-starter:1.2.6.RELEASE");
     //compile 'com.esotericsoftware:kryonet:2.22.0-RC1'
     testCompile group: 'junit', name: 'junit', version: '4.11'
 }
 
 
-artifactory {
-    contextUrl = "http://78.24.28.197:8081/artifactory"
-    publish {
-        repository {
-            repoKey = 'vympel'
-            username = "admin"
-            password = "password"
-            maven = true
+bintray {
+    user = "javagrinko" //this usually comes from gradle.properties file in ~/.gradle
+    key = "161e314ff8fea76298fcdeb51c8d939995874d11" //this usually comes from gradle.properties file in ~/.gradle
 
-        }
-        defaults {
-            publications ('mavenJava')
-        }
+//        configurations = ['deployables'] //When uploading configuration files
+    // - OR -
+    publications = ['mavenJava'] //When uploading Maven-based publication files
+    // - AND/OR -
+//        filesSpec { //When uploading any arbitrary files ('filesSpec' is a standard Gradle CopySpec)
+//            from 'arbitrary-files'
+//            into 'standalone_files/level1'
+//            rename '(.+)\\.(.+)', '$1-suffix.$2'
+//        }
+    dryRun = false //Whether to run this as dry-run, without deploying
+    publish = true //If version should be auto published after an upload
+    pkg {
+//            repo = 'myrepo'
+        repo = 'maven'
+//            userOrg = 'myorg' //An optional organization name when the repo belongs to one of the user's orgs
+        name = 'spring-tcp-controller'
+        //licenses = ['Apache-2.0']
+        //publicDownloadNumbers = true
     }
 }
 
