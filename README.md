@@ -1,5 +1,5 @@
 ## Описание
-**spring-tcp-controller** - это библиотека для Spring, которая позволяет быстро разворачивать TCP-сервера. Включает в себя:
+**tcp-spring-boot-starter** - Spring Boot библиотека, которая позволяет быстро разворачивать TCP-сервера. Включает в себя:
 * **@TcpController** - интерфейс, помечающий класс как TCP-контроллер,
 * **ServerUtils** - бин, с помощью которого можно управлять сервером.
 
@@ -10,8 +10,8 @@
 
 ## Примеры
 ```java
-import org.springframework.tcp.Connection;
-import org.springframework.tcp.TcpController;
+import javagrinko.spring.tcp.Connection;
+import javagrinko.spring.tcp.TcpController;
 
 @TcpController
 public class EchoController {
@@ -32,18 +32,8 @@ public class EchoController {
 ```
 **application.properties**:
 ```
-tcp.server.port=18502
-tcp.server.autostart=true
-```
-**ApplicationContext:**
-```java
-@Configuration
-@EnableTcpControllers
-public class Main {
-    public static void main(String[] args) throws Exception {
-        SpringApplication.run(Main.class);
-    }
-}
+javagrinko.tcp_server.port      = 20502
+javagrinko.tcp_server.autoStart = true
 ```
 
 ## Установка
@@ -62,16 +52,12 @@ dependencies {
 
 ```
 
-2) В конфигурацию добавить аннотацию:
-```java
-@EnableTcpControllers
-```
-3) в файле src/main/resources/application.properties задать настройки сервера:
+2) в файле src/main/resources/application.properties задать настройки сервера:
 ```
 #Порт сервера
-tcp.server.port=18502
+javagrinko.tcp_server.port      = 20502
 #Автостарт сервера после загрузки application context
-tcp.server.autostart=true
+javagrinko.tcp_server.autoStart = true
 ```
 
 Если автостарт не задан или установлено значение **false**, то необходимо вручную запустить сервер из кода:

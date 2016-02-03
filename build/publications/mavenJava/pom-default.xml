@@ -3,19 +3,13 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <groupId>javagrinko</groupId>
-  <artifactId>spring-tcp-controller</artifactId>
-  <version>0.142</version>
+  <artifactId>tcp-spring-boot-starter</artifactId>
+  <version>1.5</version>
   <dependencies>
-    <dependency>
-      <groupId>javagrinko</groupId>
-      <artifactId>spring-tcp-controller</artifactId>
-      <version>0.141</version>
-      <scope>runtime</scope>
-    </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter</artifactId>
-      <version>1.2.6.RELEASE</version>
+      <version>1.3.2.RELEASE</version>
       <scope>runtime</scope>
     </dependency>
   </dependencies>

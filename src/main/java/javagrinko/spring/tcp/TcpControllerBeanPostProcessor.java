@@ -1,6 +1,7 @@
-package org.springframework.tcp;
+package javagrinko.spring.tcp;
 
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.stereotype.Component;
 
@@ -15,22 +16,14 @@ import java.util.Map;
 public class TcpControllerBeanPostProcessor implements BeanPostProcessor {
     private Map<String, Class> map = new HashMap<>();
 
+    @Autowired
     private Server server;
-    private ServerUtils serverUtils;
-
-    public TcpControllerBeanPostProcessor() {
-        server = new TcpServer();
-    }
 
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
         Class<?> beanClass = bean.getClass();
         if (beanClass.isAnnotationPresent(TcpController.class)) {
             map.put(beanName, beanClass);
-        }
-        if (beanClass == ServerUtils.class) {
-            serverUtils = (ServerUtils) bean;
-            serverUtils.setServer(server);
         }
         return bean;
     }

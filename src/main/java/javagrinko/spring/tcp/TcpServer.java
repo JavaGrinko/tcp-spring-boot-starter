@@ -1,7 +1,8 @@
-package org.springframework.tcp;
+package javagrinko.spring.tcp;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -9,6 +10,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class TcpServer implements Server, Connection.Listener {
     private static Log logger = LogFactory.getLog(TcpServer.class);
 
@@ -17,7 +19,7 @@ public class TcpServer implements Server, Connection.Listener {
     private List<Connection> connections = new ArrayList<>();
     private List<Connection.Listener> listeners = new ArrayList<>();
 
-    public void setPort(Integer port){
+    public void setPort(Integer port) {
         try {
             if (port == null) {
                 logger.info("Property tcp.server.port not found. Use default port 1234");

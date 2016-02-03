@@ -1,4 +1,4 @@
-package org.springframework.tcp;
+package javagrinko.spring.tcp;
 
 import java.io.IOException;
 import java.io.InputStream;
