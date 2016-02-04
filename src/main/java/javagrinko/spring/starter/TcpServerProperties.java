@@ -2,7 +2,7 @@ package javagrinko.spring.starter;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@ConfigurationProperties(prefix = "javagrinko.tcp_server")
+@ConfigurationProperties(prefix = "javagrinko.tcp-server")
 public class TcpServerProperties {
 
     private int port;
