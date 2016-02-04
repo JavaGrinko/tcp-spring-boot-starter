@@ -65,14 +65,29 @@ bintray {
     publish = true
     pkg {
         repo = 'maven'
-        name = 'spring-tcp-controller'
+        name = 'tcp-spring-boot-starter'
     }
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
 }
 
 publishing {
     publications {
         mavenJava(MavenPublication) {
             from components.java
+            artifact sourcesJar
         }
     }
 }
+
+task generateAndPublish{
+    println "Ok"
+}
+
+generateAndPublish.dependsOn 'bintrayUpload'
+generateAndPublish.dependsOn 'generatePomFileForMavenJavaPublication'
+generateAndPublish.dependsOn 'sourcesJar'
+generateAndPublish.dependsOn 'jar'

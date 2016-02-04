@@ -41,7 +41,7 @@ javagrinko.tcp-server.auto-start = true
 ```
 repositories {
     maven {
-        url  "http://dl.bintray.com/javagrinko/maven"
+        url "http://jcenter.bintray.com"
     }
 }
 
