@@ -32,8 +32,8 @@ public class EchoController {
 ```
 **application.properties**:
 ```
-javagrinko.tcp_server.port      = 20502
-javagrinko.tcp_server.autoStart = true
+javagrinko.tcp-server.port      = 20502
+javagrinko.tcp-server.auto-start = true
 ```
 
 ## Установка
@@ -46,7 +46,7 @@ repositories {
 }
 
 dependencies {
-    compile 'javagrinko:tcp-spring-boot-starter:1.5'
+    compile 'javagrinko:tcp-spring-boot-starter:1.7'
     ...
 }
 
@@ -55,9 +55,9 @@ dependencies {
 2) в файле src/main/resources/application.properties задать настройки сервера:
 ```
 #Порт сервера
-javagrinko.tcp_server.port      = 20502
+javagrinko.tcp-server.port      = 20502
 #Автостарт сервера после загрузки application context
-javagrinko.tcp_server.autoStart = true
+javagrinko.tcp-server.auto-start = true
 ```
 
 Если автостарт не задан или установлено значение **false**, то необходимо вручную запустить сервер из кода:
@@ -70,7 +70,7 @@ public class Starter {
     @PostConstruct
     void setUp(){
         Server server = serverUtils.getServer();
-        server.setPort(9999);
+        server.setPort(20502);
         server.start();
     }
 }
