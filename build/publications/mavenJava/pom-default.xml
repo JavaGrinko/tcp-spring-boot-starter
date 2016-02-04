@@ -4,11 +4,17 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>javagrinko</groupId>
   <artifactId>tcp-spring-boot-starter</artifactId>
-  <version>1.5</version>
+  <version>1.6</version>
   <dependencies>
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter</artifactId>
+      <version>1.3.2.RELEASE</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-configuration-processor</artifactId>
       <version>1.3.2.RELEASE</version>
       <scope>runtime</scope>
     </dependency>
