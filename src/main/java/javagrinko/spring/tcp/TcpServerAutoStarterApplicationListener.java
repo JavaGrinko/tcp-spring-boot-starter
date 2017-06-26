@@ -23,4 +23,8 @@ public class TcpServerAutoStarterApplicationListener implements ApplicationListe
             server.start();
         }
     }
+
+    public Server getServer() {
+        return server;
+    }
 }

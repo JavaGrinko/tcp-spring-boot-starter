@@ -1,9 +1,9 @@
 package javagrinko.spring.tcp;
 
-import java.net.InetAddress;
+import java.net.InetSocketAddress;
 
 public interface Connection {
-    InetAddress getAddress();
+    InetSocketAddress getSocketAddress();
     void send(Object objectToSend);
     void addListener(Listener listener);
     void start();

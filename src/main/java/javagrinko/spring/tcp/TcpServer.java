@@ -74,7 +74,7 @@ public class TcpServer implements Server, Connection.Listener {
 
     @Override
     public void messageReceived(Connection connection, Object message) {
-        logger.trace("Received new message from " + connection.getAddress().getCanonicalHostName());
+        logger.trace("Received new message from " + connection.getSocketAddress().getHostName() + ": " + connection.getSocketAddress().getPort());
         logger.trace("Class name: " + message.getClass().getCanonicalName() + ", toString: " + message.toString());
         for (Connection.Listener listener : listeners) {
             listener.messageReceived(connection, message);
@@ -83,7 +83,7 @@ public class TcpServer implements Server, Connection.Listener {
 
     @Override
     public void connected(Connection connection) {
-        logger.info("New connection! Ip: " + connection.getAddress().getCanonicalHostName() + ".");
+        logger.info("New connection! " + connection.getSocketAddress().getHostName() + ": " + connection.getSocketAddress().getPort()+".");
         connections.add(connection);
         logger.info("Current connections count: " + connections.size());
         for (Connection.Listener listener : listeners) {
@@ -93,7 +93,7 @@ public class TcpServer implements Server, Connection.Listener {
 
     @Override
     public void disconnected(Connection connection) {
-        logger.info("Disconnect! Ip: " + connection.getAddress().getCanonicalHostName() + ".");
+        logger.info("Disconnect! Ip: " + connection.getSocketAddress().getHostName() + ": " + connection.getSocketAddress().getPort()+ ".");
         connections.remove(connection);
         logger.info("Current connections count: " + connections.size());
         for (Connection.Listener listener : listeners) {

@@ -1,6 +1,7 @@
 buildscript {
     repositories {
-        jcenter()
+        maven {url "http://maven.aliyun.com/nexus/content/groups/public/"}
+        //jcenter()
         maven { url 'http://repo.spring.io/plugins-release' }
     }
     dependencies {
@@ -37,14 +38,13 @@ props.store(file.newWriter(), null)
 version = ver + "." + subver
 
 repositories {
-    mavenCentral()
-    maven {
-        url "http://dl.bintray.com/javagrinko/maven"
-    }
+    maven {url "http://maven.aliyun.com/nexus/content/groups/public/"}
+    //mavenCentral()
+    maven {url "http://dl.bintray.com/javagrinko/maven"}
 }
 
 dependencies {
-    compile("org.springframework.boot:spring-boot-starter:1.3.2.RELEASE");
+    compile("org.springframework.boot:spring-boot-starter:1.3.2.RELEASE")
     optional "org.springframework.boot:spring-boot-configuration-processor:1.3.2.RELEASE"
 }
 
