@@ -18,7 +18,7 @@ public class EchoController {
 
     public void receiveData(Connection connection, byte[] data) {
         String s = new String(data);
-        connection.send(answer.toUpperCase().getBytes());
+        connection.send(s.toUpperCase().getBytes());
     }
 
     public void connect(Connection connection) {
@@ -46,7 +46,7 @@ repositories {
 }
 
 dependencies {
-    compile 'javagrinko:tcp-spring-boot-starter:1.7'
+    compile 'javagrinko:tcp-spring-boot-starter:1.10'
     ...
 }
 
