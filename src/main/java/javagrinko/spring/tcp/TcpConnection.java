@@ -1,21 +1,26 @@
 package javagrinko.spring.tcp;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class TcpConnection implements Connection {
+    private static Log logger = LogFactory.getLog(TcpConnection.class);
     private InputStream inputStream;
     private OutputStream outputStream;
     private Socket socket;
-    private List<Listener> listeners = new ArrayList<>();
+    private List<Listener> listeners = new CopyOnWriteArrayList<>();
 
-    public TcpConnection(Socket socket) {
+    TcpConnection(Socket socket) {
         this.socket = socket;
         try {
             inputStream = socket.getInputStream();
@@ -31,14 +36,15 @@ public class TcpConnection implements Connection {
     }
 
     @Override
-    public void send(Object objectToSend) {
-        if (objectToSend instanceof byte[]) {
-            byte[] data = (byte[]) objectToSend;
-            try {
-                outputStream.write(data);
-            } catch (IOException e) {
-                e.printStackTrace();
+    public void send(byte[] bytes) throws IOException {
+        outputStream.write(bytes);
+        logger.trace("Sent message");
+        if (logger.isTraceEnabled()) {
+            StringBuilder sb = new StringBuilder();
+            for (byte b : bytes) {
+                sb.append(String.format("%02X ", b));
             }
+            logger.trace(" ==> " + sb.toString());
         }
     }
 
@@ -61,28 +67,30 @@ public class TcpConnection implements Connection {
                         }
                     } else {
                         socket.close();
-                        for (Listener listener : listeners) {
-                            listener.disconnected(this);
-                        }
+                        disconnectAll();
                         break;
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    for (Listener listener : listeners) {
-                        listener.disconnected(this);
-                    }
+                } catch (IOException | IllegalAccessException | InvocationTargetException e) {
+                    logger.error(e.getMessage(), e);
+                    disconnectAll();
                     break;
                 }
             }
         }).start();
     }
 
-    @Override
-    public void close() {
-        try {
-            socket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+    private void disconnectAll() {
+        for (Listener listener : listeners) {
+            try {
+                listener.disconnected(this);
+            } catch (InvocationTargetException | IllegalAccessException e) {
+                logger.error(e.getMessage(), e);
+            }
         }
+    }
+
+    @Override
+    public void close() throws IOException {
+        socket.close();
     }
 }

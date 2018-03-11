@@ -6,15 +6,12 @@ import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Component
 public class TcpControllerBeanPostProcessor implements BeanPostProcessor {
-    private Map<String, Class> map = new HashMap<>();
+    private Map<String, Class> cache = new HashMap<>();
 
     @Autowired
     private Server server;
@@ -22,74 +19,31 @@ public class TcpControllerBeanPostProcessor implements BeanPostProcessor {
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
         Class<?> beanClass = bean.getClass();
-        if (beanClass.isAnnotationPresent(TcpController.class)) {
-            map.put(beanName, beanClass);
+        if (bean instanceof TcpHandler) {
+            cache.put(beanName, beanClass);
         }
         return bean;
     }
 
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
-        if (map.containsKey(beanName)) {
-            List<Method> receiveMethods = new ArrayList<>();
-            List<Method> connectMethods = new ArrayList<>();
-            List<Method> disconnectMethods = new ArrayList<>();
-            Method[] methods = bean.getClass().getMethods();
-            for (Method method : methods) {
-                if (method.getName().startsWith("receive") && method.getParameterCount() == 2
-                        && method.getParameterTypes()[0] == Connection.class) {
-                    receiveMethods.add(method);
-                } else if (method.getName().startsWith("connect") && method.getParameterCount() == 1
-                        && method.getParameterTypes()[0] == Connection.class) {
-                    connectMethods.add(method);
-                } else if (method.getName().startsWith("disconnect") && method.getParameterCount() == 1
-                        && method.getParameterTypes()[0] == Connection.class) {
-                    disconnectMethods.add(method);
-                }
-            }
-
-
+        if (cache.containsKey(beanName)) {
+            TcpHandler tcpHandler = (TcpHandler) bean;
             server.addListener(new Connection.Listener() {
                 @Override
-                public void messageReceived(Connection connection, Object message) {
-                    for (Method receiveMethod : receiveMethods) {
-                        Class<?> aClass = receiveMethod.getParameterTypes()[1];
-                        if (message.getClass().isAssignableFrom(aClass)) {
-                            try {
-                                receiveMethod.invoke(bean, connection, message);
-                            } catch (IllegalAccessException e) {
-                                e.printStackTrace();
-                            } catch (InvocationTargetException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
+                public void messageReceived(Connection connection, byte[] bytes)
+                        throws InvocationTargetException, IllegalAccessException {
+                    tcpHandler.receiveData(connection, bytes);
                 }
 
                 @Override
-                public void connected(Connection connection) {
-                    for (Method connectMethod : connectMethods) {
-                        try {
-                            connectMethod.invoke(bean, connection);
-                        } catch (IllegalAccessException e) {
-                            e.printStackTrace();
-                        } catch (InvocationTargetException e) {
-                            e.printStackTrace();
-                        }
-                    }
+                public void connected(Connection connection) throws InvocationTargetException, IllegalAccessException {
+                    tcpHandler.connectEvent(connection);
                 }
 
                 @Override
-                public void disconnected(Connection connection) {
-                    for (Method disconnectMethod : disconnectMethods) {
-                        try {
-                            disconnectMethod.invoke(bean, connection);
-                        } catch (IllegalAccessException e) {
-                            e.printStackTrace();
-                        } catch (InvocationTargetException e) {
-                            e.printStackTrace();
-                        }
-                    }
+                public void disconnected(Connection connection) throws InvocationTargetException, IllegalAccessException {
+                    tcpHandler.disconnectEvent(connection);
                 }
             });
         }

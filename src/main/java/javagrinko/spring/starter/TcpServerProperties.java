@@ -2,12 +2,12 @@ package javagrinko.spring.starter;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@ConfigurationProperties(prefix = "javagrinko.tcp-server")
+@ConfigurationProperties(prefix = "tcp.server")
 public class TcpServerProperties {
 
-    private int port;
+    private Integer port = 1234;
 
-    private boolean autoStart;
+    private Boolean autoStart = true;
 
     public int getPort() {
         return port;

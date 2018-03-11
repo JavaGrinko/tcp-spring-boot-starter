@@ -1,39 +1,44 @@
-## Описание
-**tcp-spring-boot-starter** - Spring Boot библиотека, которая позволяет быстро разворачивать TCP-сервера. Включает в себя:
-* **@TcpController** - аннотация, помечающая класс как TCP-контроллер,
-* **ServerUtils** - бин, с помощью которого можно управлять сервером.
-
-Контроллер может содержать три типа методов:
-* Метод-событие получения сообщения. Должен начинаться со слова receive и иметь два аргумента: Connection и Object (или любой другой, тогда метод приема будет типизирован).
-* Метод-событие нового подключения. Должен начинаться со слова connect и иметь аргумент Connection
-* Метод-событие отключения клиента. Должен начинаться со слова disconnect и иметь аргумент Connection
-
-## Примеры
+## Description
+**tcp-spring-boot-starter** - is convenient dependency descriptor that you can include in your application to get started using Spring and TCP-servers.
+## Usage
 ```java
 import javagrinko.spring.tcp.Connection;
 import javagrinko.spring.tcp.TcpController;
 
 @TcpController
-public class EchoController {
+public class EchoController implements TcpHandler {
 
+    @Override
     public void receiveData(Connection connection, byte[] data) {
         String s = new String(data);
         connection.send(s.toUpperCase().getBytes());
     }
 
-    public void connect(Connection connection) {
+    @Override
+    public void connectEvent(Connection connection) {
         System.out.println("New connection " + connection.getAddress().getCanonicalHostName());
     }
-
-    public void disconnect(Connection connection) {
+    
+    @Override
+    public void disconnectEvent(Connection connection) {
         System.out.println("Disconnect " + connection.getAddress().getCanonicalHostName());
     }
 }
 ```
+**@TcpController** - indicates that an annotated class is a TCP-Controller.
+
+## Configuration
+
+| Setting key        | Type           | Default value  |
+| ------------- |:-------------:| -----:|
+| tcp.server.port      | Integer | 1234 |
+| tcp.server.autoStart      | Boolean      |   true |
+
 **application.properties**:
+
 ```
-javagrinko.tcp-server.port      = 20502
-javagrinko.tcp-server.auto-start = true
+tcp.server.port      = 20502
+tcp.server.auto-start = true
 ```
 
 ## Установка
@@ -46,7 +51,7 @@ repositories {
 }
 
 dependencies {
-    compile 'javagrinko:tcp-spring-boot-starter:1.10'
+    compile 'javagrinko:tcp-spring-boot-starter:1.12'
     ...
 }
 

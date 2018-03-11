@@ -5,10 +5,11 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 @Component
 public class TcpServer implements Server, Connection.Listener {
@@ -16,20 +17,15 @@ public class TcpServer implements Server, Connection.Listener {
 
     private ServerSocket serverSocket;
     private volatile boolean isStop;
-    private List<Connection> connections = new ArrayList<>();
-    private List<Connection.Listener> listeners = new ArrayList<>();
+    private List<Connection> connections = new CopyOnWriteArrayList<>();
+    private List<Connection.Listener> listeners = new CopyOnWriteArrayList<>();
 
     public void setPort(Integer port) {
         try {
-            if (port == null) {
-                logger.info("Property tcp.server.port not found. Use default port 1234");
-                port = 1234;
-            }
             serverSocket = new ServerSocket(port);
             logger.info("Server start at port " + port);
         } catch (IOException e) {
-            e.printStackTrace();
-            logger.error("May be port " + port + " busy.");
+            logger.error("Port " + port + " busy.", e);
         }
     }
 
@@ -50,8 +46,8 @@ public class TcpServer implements Server, Connection.Listener {
                         tcpConnection.addListener(this);
                         connected(tcpConnection);
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
+                } catch (IOException | IllegalAccessException | InvocationTargetException e) {
+                    logger.error(e.getMessage(), e);
                 }
             }
         }).start();
@@ -73,16 +69,24 @@ public class TcpServer implements Server, Connection.Listener {
     }
 
     @Override
-    public void messageReceived(Connection connection, Object message) {
-        logger.trace("Received new message from " + connection.getAddress().getCanonicalHostName());
-        logger.trace("Class name: " + message.getClass().getCanonicalName() + ", toString: " + message.toString());
+    public void messageReceived(Connection connection, byte[] bytes)
+            throws InvocationTargetException, IllegalAccessException {
+        if (logger.isTraceEnabled()) {
+            logger.trace("Received message from " + connection.getAddress().getCanonicalHostName());
+            StringBuilder sb = new StringBuilder();
+            for (byte b : bytes) {
+                sb.append(String.format("%02X ", b));
+            }
+            logger.trace(" <== " + sb.toString());
+        }
         for (Connection.Listener listener : listeners) {
-            listener.messageReceived(connection, message);
+            listener.messageReceived(connection, bytes);
         }
     }
 
     @Override
-    public void connected(Connection connection) {
+    public void connected(Connection connection)
+            throws InvocationTargetException, IllegalAccessException {
         logger.info("New connection! Ip: " + connection.getAddress().getCanonicalHostName() + ".");
         connections.add(connection);
         logger.info("Current connections count: " + connections.size());
@@ -92,7 +96,8 @@ public class TcpServer implements Server, Connection.Listener {
     }
 
     @Override
-    public void disconnected(Connection connection) {
+    public void disconnected(Connection connection)
+            throws InvocationTargetException, IllegalAccessException {
         logger.info("Disconnect! Ip: " + connection.getAddress().getCanonicalHostName() + ".");
         connections.remove(connection);
         logger.info("Current connections count: " + connections.size());
