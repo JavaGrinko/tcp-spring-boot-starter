@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tcp-server-example/tcp-server-example.iml" filepath="$PROJECT_DIR$/.idea/modules/tcp-server-example/tcp-server-example.iml" group="tcp-server-example" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tcp-server-example/tcp-server-example_main.iml" filepath="$PROJECT_DIR$/.idea/modules/tcp-server-example/tcp-server-example_main.iml" group="tcp-server-example" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tcp-server-example/tcp-server-example_test.iml" filepath="$PROJECT_DIR$/.idea/modules/tcp-server-example/tcp-server-example_test.iml" group="tcp-server-example" />
+      <module fileurl="file://$PROJECT_DIR$/tcp-spring-boot-starter.iml" filepath="$PROJECT_DIR$/tcp-spring-boot-starter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tcp-spring-boot-starter/tcp-spring-boot-starter-tcp-spring-boot-starter.iml" filepath="$PROJECT_DIR$/.idea/modules/tcp-spring-boot-starter/tcp-spring-boot-starter-tcp-spring-boot-starter.iml" group="tcp-spring-boot-starter" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tcp-spring-boot-starter/tcp-spring-boot-starter-tcp-spring-boot-starter_main.iml" filepath="$PROJECT_DIR$/.idea/modules/tcp-spring-boot-starter/tcp-spring-boot-starter-tcp-spring-boot-starter_main.iml" group="tcp-spring-boot-starter" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tcp-spring-boot-starter/tcp-spring-boot-starter-tcp-spring-boot-starter_test.iml" filepath="$PROJECT_DIR$/.idea/modules/tcp-spring-boot-starter/tcp-spring-boot-starter-tcp-spring-boot-starter_test.iml" group="tcp-spring-boot-starter" />
+    </modules>
+  </component>
+</project>

@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: javagrinko:tcp-spring-boot-starter:1.12">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/Could not find javagrinko:tcp-spring-boot-starter:1.12." />
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/javagrinko/tcp-spring-boot-starter/1.12/97e8805a774691c74d95b118dd8559535496466d/tcp-spring-boot-starter-1.12.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/javagrinko/tcp-spring-boot-starter/1.12/21a9552ddbff161f8625983f2d72f7d7ed84168e/tcp-spring-boot-starter-1.12-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

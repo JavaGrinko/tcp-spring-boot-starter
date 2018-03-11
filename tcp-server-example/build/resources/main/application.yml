@@ -1,0 +1,3 @@
+tcp:
+  server:
+    auto-start: true

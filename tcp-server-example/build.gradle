@@ -1,0 +1,28 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:1.5.10.RELEASE"
+    }
+}
+
+group 'javagrinko'
+version '1.12'
+
+apply plugin: 'java'
+apply plugin: "org.springframework.boot"
+
+sourceCompatibility = 1.8
+
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+dependencies {
+    compile 'javagrinko:tcp-spring-boot-starter:1.12'
+    compile("org.springframework.boot:spring-boot-starter");
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
