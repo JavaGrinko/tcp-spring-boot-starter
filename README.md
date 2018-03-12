@@ -1,4 +1,7 @@
+#### [View English version of this file here](./README.en.md)
+
 ## Описание
+
 **tcp-spring-boot-starter** - Spring Boot библиотека, которая позволяет быстро разворачивать TCP-сервера. Включает в себя:
 * **@TcpController** - аннотация, помечающая класс как TCP-контроллер,
 * **ServerUtils** - бин, с помощью которого можно управлять сервером.
