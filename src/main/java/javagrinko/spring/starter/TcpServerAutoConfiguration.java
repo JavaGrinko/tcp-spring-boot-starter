@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @EnableConfigurationProperties(TcpServerProperties.class)
-@ConditionalOnProperty(prefix = "javagrinko.tcp-server", name = {"port", "autoStart"})
+@ConditionalOnProperty(prefix = "javagrinko.tcp-server", name = {"port", "autoStart", "timeout"})
 public class TcpServerAutoConfiguration {
 
     @Bean
