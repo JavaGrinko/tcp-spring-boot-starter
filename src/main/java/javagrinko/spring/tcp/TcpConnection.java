@@ -81,7 +81,7 @@ public class TcpConnection implements Connection {
                         }
                     } else {
                         socket.close();
-
+                        logger.info("Receibi nada....");
                         // Every time the connection gets closed, stop the TimeOut Timer
                         stopTimeOutTimer();
 
