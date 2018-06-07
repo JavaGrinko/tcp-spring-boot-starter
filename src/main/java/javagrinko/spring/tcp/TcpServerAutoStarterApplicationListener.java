@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class TcpServerAutoStarterApplicationListener implements ApplicationListener<ContextRefreshedEvent> {
-
     @Autowired
     private TcpServerProperties properties;
 

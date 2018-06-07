@@ -34,6 +34,7 @@ public class TcpControllerBeanPostProcessor implements BeanPostProcessor {
             List<Method> receiveMethods = new ArrayList<>();
             List<Method> connectMethods = new ArrayList<>();
             List<Method> disconnectMethods = new ArrayList<>();
+            List<Method> timeoutMethods = new ArrayList<>();
             Method[] methods = bean.getClass().getMethods();
             for (Method method : methods) {
                 if (method.getName().startsWith("receive") && method.getParameterCount() == 2
@@ -45,6 +46,9 @@ public class TcpControllerBeanPostProcessor implements BeanPostProcessor {
                 } else if (method.getName().startsWith("disconnect") && method.getParameterCount() == 1
                         && method.getParameterTypes()[0] == Connection.class) {
                     disconnectMethods.add(method);
+                } else if (method.getName().startsWith("timeout") && method.getParameterCount() == 1
+                        && method.getParameterTypes()[0] == Connection.class) {
+                    timeoutMethods.add(method);
                 }
             }
 
@@ -84,6 +88,19 @@ public class TcpControllerBeanPostProcessor implements BeanPostProcessor {
                     for (Method disconnectMethod : disconnectMethods) {
                         try {
                             disconnectMethod.invoke(bean, connection);
+                        } catch (IllegalAccessException e) {
+                            e.printStackTrace();
+                        } catch (InvocationTargetException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
+                @Override
+                public void timedout(Connection connection) {
+                    for (Method timeoutMethod : timeoutMethods) {
+                        try {
+                            timeoutMethod.invoke(bean, connection);
                         } catch (IllegalAccessException e) {
                             e.printStackTrace();
                         } catch (InvocationTargetException e) {

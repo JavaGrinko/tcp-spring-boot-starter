@@ -100,4 +100,12 @@ public class TcpServer implements Server, Connection.Listener {
             listener.disconnected(connection);
         }
     }
+
+    @Override
+    public void timedout(Connection connection) {
+        logger.info("TimedOut! Ip: " + connection.getAddress().getCanonicalHostName() + ".");
+        for (Connection.Listener listener : listeners) {
+            listener.timedout(connection);
+        }
+    }
 }
