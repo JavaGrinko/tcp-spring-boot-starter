@@ -9,7 +9,7 @@ public class TcpServerProperties {
 
     private boolean autoStart;
 
-    private long timeout;
+    private Long timeout;
 
     public int getPort() {
         return port;
@@ -27,7 +27,7 @@ public class TcpServerProperties {
         this.autoStart = autoStart;
     }
 
-    public long getTimeout() {
+    public Long getTimeout() {
         return timeout;
     }
 

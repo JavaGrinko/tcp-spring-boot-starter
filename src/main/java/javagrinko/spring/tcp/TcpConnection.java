@@ -1,9 +1,7 @@
 package javagrinko.spring.tcp;
 
-import javagrinko.spring.starter.TcpServerProperties;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,9 +12,6 @@ import java.util.*;
 
 public class TcpConnection implements Connection {
     private static Log logger = LogFactory.getLog(TcpConnection.class);
-
-    @Autowired
-    private TcpServerProperties properties;
 
     private InputStream inputStream;
     private OutputStream outputStream;
@@ -133,34 +128,38 @@ public class TcpConnection implements Connection {
 
     @Override
     public synchronized void startTimeOutTimer() {
-        long timeout = properties.getTimeout();
-
-        logger.debug("Start Timer");
-        TimerTask timeOutTask = new TimerTask() {
-            @Override
-            public void run() {
-                for (Listener listener : listeners) {
-                    listener.timedout(TcpConnection.this);
+        if (TcpServer.isTimeOutEnabled()) {
+            logger.debug("Start Timer");
+            TimerTask timeOutTask = new TimerTask() {
+                @Override
+                public void run() {
+                    for (Listener listener : listeners) {
+                        listener.timedout(TcpConnection.this);
+                    }
                 }
-            }
-        };
-        timeOutTimer = new Timer();
-        timeOutTimer.schedule(timeOutTask, timeout);
+            };
+            timeOutTimer = new Timer();
+            timeOutTimer.schedule(timeOutTask, TcpServer.getTimeOut());
+        }
     }
 
     @Override
     public synchronized void stopTimeOutTimer() {
-        if (null != timeOutTimer){
-            logger.debug("Timer Cancelled");
-            timeOutTimer.cancel();
-            timeOutTimer = null;
+        if (TcpServer.isTimeOutEnabled()) {
+            if (null != timeOutTimer) {
+                logger.debug("Timer Cancelled");
+                timeOutTimer.cancel();
+                timeOutTimer = null;
+            }
         }
     }
 
     @Override
     public synchronized void restartTimeOutTimer() {
-        logger.debug("Timer Restarted");
-        stopTimeOutTimer();
-        startTimeOutTimer();
+        if (TcpServer.isTimeOutEnabled()) {
+            logger.debug("Timer Restarted");
+            stopTimeOutTimer();
+            startTimeOutTimer();
+        }
     }
 }

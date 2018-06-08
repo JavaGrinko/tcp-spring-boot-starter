@@ -19,6 +19,29 @@ public class TcpServer implements Server, Connection.Listener {
     private List<Connection> connections = new ArrayList<>();
     private List<Connection.Listener> listeners = new ArrayList<>();
 
+    private static long timeOut;
+    private static boolean timeOutEnabled;
+
+    public void setTimeOut(Long to){
+        if (null == to){
+            logger.warn("Property javagrinko.tcp-server.timeout not found. TimeOut will be disabled");
+            this.timeOutEnabled = false;
+
+        }else{
+            this.timeOut = to;
+            this.timeOutEnabled = true;
+        }
+    }
+
+    public static long getTimeOut(){
+        return timeOut;
+    }
+
+    public static boolean isTimeOutEnabled(){
+        return timeOutEnabled;
+    }
+
+
     public void setPort(Integer port) {
         try {
             if (port == null) {

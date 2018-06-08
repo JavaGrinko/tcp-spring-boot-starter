@@ -6,6 +6,7 @@ import java.util.List;
 public interface Server {
     int getConnectionsCount();
     void setPort(Integer port);
+    void setTimeOut(Long to);
     void start();
     void stop();
     List<Connection> getConnections();

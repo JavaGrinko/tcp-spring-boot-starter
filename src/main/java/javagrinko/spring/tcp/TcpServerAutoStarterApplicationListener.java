@@ -17,7 +17,9 @@ public class TcpServerAutoStarterApplicationListener implements ApplicationListe
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
         boolean autoStart = properties.getAutoStart();
+
         if (autoStart){
+            server.setTimeOut(properties.getTimeout());
             server.setPort(properties.getPort());
             server.start();
         }
