@@ -1,19 +1,25 @@
 package javagrinko.spring.tcp;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class TcpConnection implements Connection {
+    private static Log logger = LogFactory.getLog(TcpConnection.class);
+
     private InputStream inputStream;
     private OutputStream outputStream;
     private Socket socket;
     private List<Listener> listeners = new ArrayList<>();
+
+    private Timer timeOutTimer;
+    private Thread connectionThread;
 
     public TcpConnection(Socket socket) {
         this.socket = socket;
@@ -49,40 +55,111 @@ public class TcpConnection implements Connection {
 
     @Override
     public void start() {
-        new Thread(() -> {
-            while (true) {
+        // Every time the connection start, set the TimeOut Timer
+        startTimeOutTimer();
+
+        connectionThread = new Thread(() -> {
+            while (!connectionThread.isInterrupted()) {
                 byte buf[] = new byte[64 * 1024];
                 try {
                     int count = inputStream.read(buf);
                     if (count > 0) {
                         byte[] bytes = Arrays.copyOf(buf, count);
+
+                        // Every time the connection is kept alive, re-start the TimeOut Timer
+                        restartTimeOutTimer();
+
                         for (Listener listener : listeners) {
                             listener.messageReceived(this, bytes);
                         }
                     } else {
-                        socket.close();
+                        // Don't want to close the socket after data is read
+                        /*socket.close();
+                        logger.info("Receibi nada....");
+                        // Every time the connection gets closed, stop the TimeOut Timer
+                        stopTimeOutTimer();
+
                         for (Listener listener : listeners) {
                             listener.disconnected(this);
                         }
-                        break;
+                        break;*/
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
-                    for (Listener listener : listeners) {
-                        listener.disconnected(this);
-                    }
+
+                    logger.debug("Exception in ConnecionThread.");
+
+                    // BREAK just quit from the loop
                     break;
                 }
             }
-        }).start();
+
+            // Whenever the thread stops
+            //  - Client disconnects
+            //  - Server closes the connection (for example in TimeOut)
+            // Then it will notify the disconnection
+            logger.debug("ConnectionThread is dead!");
+
+            // Every time the connection gets closed, stop the TimeOut Timer
+            stopTimeOutTimer();
+
+            // Notify about the disconnection (closed socket)
+            for (Listener listener : listeners) {
+                listener.disconnected(this);
+            }
+        });
+
+        connectionThread.start();
     }
 
     @Override
     public void close() {
+        logger.info("Closing connection...");
         try {
+            // Need to interrupt the thread and also close the socket else it won't work.
+            // Then the connectioThread will stop and there it will notify the event
+            connectionThread.interrupt();
             socket.close();
+
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    @Override
+    public synchronized void startTimeOutTimer() {
+        if (TcpServer.isTimeOutEnabled()) {
+            logger.debug("Start Timer");
+            TimerTask timeOutTask = new TimerTask() {
+                @Override
+                public void run() {
+                    for (Listener listener : listeners) {
+                        listener.timedout(TcpConnection.this);
+                    }
+                }
+            };
+            timeOutTimer = new Timer();
+            timeOutTimer.schedule(timeOutTask, TcpServer.getTimeOut());
+        }
+    }
+
+    @Override
+    public synchronized void stopTimeOutTimer() {
+        if (TcpServer.isTimeOutEnabled()) {
+            if (null != timeOutTimer) {
+                logger.debug("Timer Cancelled");
+                timeOutTimer.cancel();
+                timeOutTimer = null;
+            }
+        }
+    }
+
+    @Override
+    public synchronized void restartTimeOutTimer() {
+        if (TcpServer.isTimeOutEnabled()) {
+            logger.debug("Timer Restarted");
+            stopTimeOutTimer();
+            startTimeOutTimer();
         }
     }
 }

@@ -9,6 +9,8 @@ public class TcpServerProperties {
 
     private boolean autoStart;
 
+    private Long timeout;
+
     public int getPort() {
         return port;
     }
@@ -23,5 +25,13 @@ public class TcpServerProperties {
 
     public void setAutoStart(boolean autoStart) {
         this.autoStart = autoStart;
+    }
+
+    public Long getTimeout() {
+        return timeout;
+    }
+
+    public void setTimeout(long timeout) {
+        this.timeout = timeout;
     }
 }
